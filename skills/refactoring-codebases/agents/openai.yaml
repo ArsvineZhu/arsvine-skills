@@ -1,0 +1,4 @@
+interface:
+  display_name: "Refactoring Codebases"
+  short_description: "Plan and execute behavior-preserving codebase refactors"
+  default_prompt: "Audit or refactor this codebase in small evidence-backed passes while preserving observable behavior and separating migrations from structural cleanup."
