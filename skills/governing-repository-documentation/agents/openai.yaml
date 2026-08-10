@@ -1,0 +1,4 @@
+interface:
+  display_name: "Repository Documentation Governance"
+  short_description: "Govern repository docs and institutional knowledge"
+  default_prompt: "Use $governing-repository-documentation to audit and govern this repository's documentation system, including durable operational knowledge and documentation drift."
