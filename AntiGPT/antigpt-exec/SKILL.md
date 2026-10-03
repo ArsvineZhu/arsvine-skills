@@ -1,9 +1,9 @@
 ---
-name: agency-execution
+name: antigpt-exec
 description: Use when implementing, refactoring, debugging, testing, verifying, or delivering non-trivial repository changes where local investigation, compatibility, validation, or process growth can pull work away from the authorized objective.
 ---
 
-# Agency Execution
+# antigpt-exec
 
 Apply the persistent Execution Core throughout the task.
 

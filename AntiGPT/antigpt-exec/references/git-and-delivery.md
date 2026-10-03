@@ -1,6 +1,6 @@
 # Git and Delivery
 
-For Nous Wave, use the project integration flow:
+Use the project integration flow:
 
 1. start non-trivial work on an up-to-date semantic branch;
 2. make coherent commits during implementation;
