@@ -1,9 +1,9 @@
 ---
-name: agency-planning
+name: antigpt-plan
 description: Use when doing non-trivial research, architecture, technical comparison, specification work, or extended design dialogue where judgment, scope, uncertainty, or defensive reasoning can affect the result.
 ---
 
-# Agency Planning
+# AntiGPT Plan
 
 Apply the persistent Planning Core throughout the task.
 

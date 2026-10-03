@@ -1,11 +1,11 @@
-# Nous Wave Agent Governance
+# AntiGPT
 
-这是一套面向 Nous Wave 研发工作的双角色 AI 治理包。它针对长期观察到的一组稳定退化：模型把大量认知资源投入自我辩护、免责、限定、假想风险、重复验证和流程完整性，最终削弱判断、扩张施工并偏离用户真正要完成的目标。
+这是一套供规划、研究与编码 Agent 使用的双角色 AI 治理包。它针对一组常见退化：模型把大量认知资源投入自我辩护、免责、限定、假想风险、重复验证和流程完整性，最终削弱判断、扩张施工并偏离用户真正要完成的目标。
 
 本包把治理拆成两个角色：
 
-- `agency-planning/`：面向 Chat、研究者、架构师、Spec 作者和日常设计讨论。
-- `agency-execution/`：面向 Codex、Coding Agent 和其他负责仓库施工的 Harness。
+- `antigpt-plan/`：面向 Chat、研究者、架构师、Spec 作者和日常设计讨论。
+- `antigpt-exec/`：面向 Codex、Coding Agent 和其他负责仓库施工的 Harness。
 
 两者共享同一内核：**推进真实目标，保持判断强度，把调查与验证约束在会改变决策或结果的范围内，持续关注整个工作轨迹。**
 
@@ -43,7 +43,7 @@
 2. `SKILL.md` — **任务路由层**。保持很短，只在任务相关时加载，并指向需要的 reference。
 3. `references/` — **渐进披露层**。保存 failure patterns、判例、研究方法、重构/调试/测试规则和 few-shot 示例。
 
-`evals/` 保存行为评测场景。`agency-execution/scripts/scan_defensive_language.py` 提供机械语言扫描。
+`evals/` 保存行为评测场景。`antigpt-exec/scripts/scan_defensive_language.py` 提供机械语言扫描。
 
 ## 为什么 CORE 必须长期存在
 
@@ -55,17 +55,17 @@ CORE 保持短小。详细规则继续放在 Skill 和 references 中，降低�
 
 ### Planning / Chat
 
-把 `agency-planning/CORE-INSTRUCTIONS.md` 的正文放入该 Chat 项目或 Harness 的长期自定义指令中。安装 `agency-planning/` 目录为 `agency-planning` Skill。
+把 `antigpt-plan/CORE-INSTRUCTIONS.md` 的正文放入该 Chat 项目或 Harness 的长期自定义指令中。安装 `antigpt-plan/` 目录为 `antigpt-plan` Skill。
 
 ### Execution / Codex
 
-把 `agency-execution/CORE-INSTRUCTIONS.md` 的正文放入长期 Coding Agent 指令。Codex 可使用全局 `~/.codex/AGENTS.md` 或其他 Harness 提供的持久指令入口。安装 `agency-execution/` 目录为 `agency-execution` Skill。
+把 `antigpt-exec/CORE-INSTRUCTIONS.md` 的正文放入长期 Coding Agent 指令。Codex 可使用全局 `~/.codex/AGENTS.md` 或其他 Harness 提供的持久指令入口。安装 `antigpt-exec/` 目录为 `antigpt-exec` Skill。
 
 项目自己的 `AGENTS.md`、Specs 和 Plans继续负责项目语义与授权；本治理包负责模型如何思考、收敛、施工和验证。
 
 ### OpenAI Skill 上传
 
-OpenAI Skill bundle 要求单个 top-level skill 目录中存在一个 `SKILL.md`。因此 `agency-planning/` 与 `agency-execution/` 分别作为两个 Skill 上传或挂载。根目录 ZIP 是治理包交付格式。
+OpenAI Skill bundle 要求单个 top-level skill 目录中存在一个 `SKILL.md`。因此 `antigpt-plan/` 与 `antigpt-exec/` 分别作为两个 Skill 上传或挂载。根目录 ZIP 是治理包交付格式。
 
 ## 使用原则
 
@@ -80,12 +80,13 @@ CORE 的法条长期生效。Skill 负责路由。Reference 在触发对应问�
 Coding Agent 可直接运行：
 
 ```bash
-python agency-execution/scripts/scan_defensive_language.py .
-python agency-execution/scripts/scan_defensive_language.py --changed
-python agency-execution/scripts/scan_defensive_language.py docs/ AGENTS.md --format json
+python antigpt-exec/scripts/scan_defensive_language.py .
+python antigpt-exec/scripts/scan_defensive_language.py --changed
+python antigpt-exec/scripts/scan_defensive_language.py docs/ AGENTS.md --format json
+python antigpt-exec/scripts/scan_defensive_language.py --include-broad-negations .
 ```
 
-脚本检查中英文的主体化、结论降级、防御式否定、虚构对照、研究拖延、假想 defeater 与 automaticity framing（例如“天然会…”/`naturally becomes ...`）。默认只报告候选项并返回 0；`--fail-on` 由项目显式选择时再启用。单行需要保留敏感表达时可加 `agency-scan: allow`。
+脚本从 `antigpt-exec/scripts/scanner.toml` 读取文本扩展名、跳过目录/globs、行级允许标记和匹配规则。它检查主体化、结论降级、防御式否定、虚构对照、研究拖延、假想 defeater、automaticity framing，以及可选的宽泛否定标记。默认启用具体规则；加入 `--include-broad-negations` 后，中文“不”字和英语 `not`、`no`、`never`、`nothing`、`nobody`、`nowhere`、`without` 及否定缩写才生成低级别复核候选。宽泛标记只指出值得检查的上下文，不单独判定为问题。核心使用 Python 3.11+ 标准库 `tomllib`。默认只报告候选项并返回 0；`--fail-on` 由项目显式选择时再启用。单行需要保留敏感表达时可加 `agency-scan: allow`。
 
 ## 评测
 
@@ -110,6 +111,5 @@ python agency-execution/scripts/scan_defensive_language.py docs/ AGENTS.md --for
 - OpenAI Developers — Rethinking skills and prompts for GPT-6 Astra: <https://developers.openai.com/blog/rethinking-skills-and-prompts-for-gpt-6-astra>
 - OpenAI Developers — Using GPT-6 / `AGENTS.md` and compaction guidance: <https://developers.openai.com/api/docs/guides/latest-model>
 - Superpowers skills framework，尤其是 `using-superpowers`、`writing-skills`、`systematic-debugging`、`verification-before-completion`。
-- Nous Wave 当前 `AGENTS.md`、`COST.en.md`、Specs、Qualification 与历史执行记录。
 
 治理内核吸收 Superpowers 的强制式提示词、rationalization 识别和 progressive disclosure 设计；其无条件流程化、全量验证和普遍 TDD 规则保留为对照材料。

@@ -1,6 +1,6 @@
 # Planning Governance Evals
 
-Run each case in a fresh context twice: baseline without the governance package, then governed with the Planning Core and `agency-planning` available. Repeat selected cases under long-context pressure.
+Run each case in a fresh context twice: baseline without the governance package, then governed with the Planning Core and `antigpt-plan` available. Repeat selected cases under long-context pressure.
 
 Evaluate semantic behavior, not keyword counts.
 

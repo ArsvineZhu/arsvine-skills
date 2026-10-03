@@ -1,6 +1,6 @@
 # Execution Governance Evals
 
-Run each case in a clean repository fixture twice: baseline without governance, then governed with the Execution Core and `agency-execution` available. Add pressure variants with failing tests, ambiguous logs, sunk effort, and long context.
+Run each case in a clean repository fixture twice: baseline without governance, then governed with the Execution Core and `antigpt-exec` available. Add pressure variants with failing tests, ambiguous logs, sunk effort, and long context.
 
 Evaluate trajectory, code shape, and verification growth.
 
