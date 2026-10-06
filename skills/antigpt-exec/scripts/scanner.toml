@@ -1,0 +1,105 @@
+version = 2
+
+[scanner]
+prose_extensions = [".md", ".mdx", ".rst", ".adoc", ".txt"]
+code_extensions = [".py", ".pyi", ".js", ".jsx", ".ts", ".tsx", ".mjs", ".cjs", ".rs", ".go", ".java", ".kt", ".kts", ".swift", ".sh", ".bash", ".zsh", ".fish", ".ps1", ".toml", ".yaml", ".yml", ".json", ".jsonc", ".xml", ".html", ".css", ".scss", ".less", ".sql", ".proto", ".c", ".cc", ".cpp", ".h", ".hpp"]
+skip_dirs = [".git", ".cache", ".idea", ".next", ".nuxt", ".pytest_cache", ".turbo", ".venv", ".vscode", "build", "coverage", "dist", "node_modules", "target", "vendor", "venv", "archive"]
+skip_globs = ["**/package-lock.json", "**/pnpm-lock.yaml", "**/yarn.lock", "**/Cargo.lock", "**/go.sum", "**/poetry.lock"]
+
+[[patterns]]
+key = "invented-contrast-zh"
+class = "block"
+regex = "(?:不是.{0,80}而是|并非.{0,80}而是|并不是.{0,80}而是)"
+ignore_case = false
+note = "Use this contrast only when the distinction is live in the task. Otherwise state the positive proposition directly."
+
+[[patterns]]
+key = "invented-contrast-en"
+class = "block"
+regex = "\\bnot\\s+.{1,100}\\s+but\\s+"
+ignore_case = true
+note = "Use this contrast only when the distinction is live in the task. Otherwise state the positive proposition directly."
+
+[[patterns]]
+key = "defensive-negation-zh"
+class = "block"
+regex = "(?:不自动(?:意味着|代表|说明)|并不意味着|并不代表|不能证明|这并不意味着|这不代表)"
+ignore_case = false
+note = "Check whether the sentence fabricates a stronger claim and then negates it."
+
+[[patterns]]
+key = "defensive-negation-en"
+class = "block"
+regex = "\\b(?:does not automatically (?:mean|imply|prove)|doesn't automatically (?:mean|imply|prove)|does not necessarily (?:mean|imply|prove)|doesn't necessarily (?:mean|imply|prove)|does not prove|doesn't prove|cannot prove|this does not mean|this doesn't mean)\\b"
+ignore_case = true
+note = "Check whether the sentence fabricates a stronger claim and then negates it."
+
+[[patterns]]
+key = "subjectivization-zh"
+class = "review"
+regex = "(?:我认为|我觉得|我倾向于?|在我看来|我的倾向是)"
+ignore_case = false
+note = "Speaker identity should add information, not soften a technical judgment."
+
+[[patterns]]
+key = "subjectivization-en"
+class = "review"
+regex = "\\b(?:I think|I believe|I(?:'|’)d lean toward|I lean toward|in my view|my preference is)\\b"
+ignore_case = true
+note = "Speaker identity should add information, not soften a technical judgment."
+
+[[patterns]]
+key = "commitment-weakening-zh"
+class = "review"
+regex = "(?:可以考虑|不妨考虑|可能更(?:合适|合理|好)|或许更(?:合适|合理|好)|建议可以)"
+ignore_case = false
+note = "Check whether a settled action was rewritten as a preference or possibility."
+
+[[patterns]]
+key = "commitment-weakening-en"
+class = "review"
+regex = "\\b(?:could consider|might consider|may want to consider|could perhaps|might perhaps|probably the better option)\\b"
+ignore_case = true
+note = "Check whether a settled action was rewritten as a preference or possibility."
+
+[[patterns]]
+key = "research-deferral-zh"
+class = "review"
+regex = "(?:需要进一步(?:研究|验证|调查|确认)|还需要进一步(?:研究|验证|调查|确认)|有待进一步(?:研究|验证|调查|确认))"
+ignore_case = false
+note = "Name the decision, model, implementation, or validation strategy that the extra work can change."
+
+[[patterns]]
+key = "research-deferral-en"
+class = "review"
+regex = "\\b(?:requires further (?:research|validation|investigation)|needs further (?:research|validation|investigation)|more research is needed|further investigation is needed)\\b"
+ignore_case = true
+note = "Name the decision, model, implementation, or validation strategy that the extra work can change."
+
+[[patterns]]
+key = "hypothetical-defeater-zh"
+class = "review"
+regex = "(?:潜在(?:的)?外部(?:调用方|消费者|依赖)|未来可能(?:存在|出现)|理论上可能(?:存在|出现)|无法排除.{0,40}可能)"
+ignore_case = false
+note = "Require evidence, consequence, or an explicit obligation before an unobserved defeater changes the action."
+
+[[patterns]]
+key = "hypothetical-defeater-en"
+class = "review"
+regex = "\\b(?:potential external consumers?|future consumers? may|there may be unknown consumers?|cannot rule out the possibility)\\b"
+ignore_case = true
+note = "Require evidence, consequence, or an explicit obligation before an unobserved defeater changes the action."
+
+[[patterns]]
+key = "safety-preface-zh"
+class = "signal"
+regex = "(?:为了稳妥起见|为(?:了)?安全起见|谨慎起见|保险起见)"
+ignore_case = false
+note = "Check whether the caution changes action under a concrete risk."
+
+[[patterns]]
+key = "safety-preface-en"
+class = "signal"
+regex = "\\b(?:to be safe|for safety's sake|to err on the side of caution|out of an abundance of caution)\\b"
+ignore_case = true
+note = "Check whether the caution changes action under a concrete risk."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "AntiGPT Exec"
+  short_description: "Govern implementation, refactoring, debugging, verification, and delivery"
+  default_prompt: "Use AntiGPT Exec to implement the authorized objective at the owning level and verify only the live claims that matter."

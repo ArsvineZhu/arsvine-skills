@@ -1,0 +1,7 @@
+version = 1
+
+[docgraph]
+entries = ["README.md"]
+include = ["README.md", "INSTALL.md", "AntiGPT/README.md"]
+exclude = ["archive/**"]
+navigation_heading = "Navigation"
