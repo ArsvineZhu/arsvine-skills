@@ -1,0 +1,7 @@
+version = 1
+
+[docgraph]
+entries = ["README.md", "README.zh-CN.md"]
+include = ["README.md", "README.zh-CN.md", "INSTALL.md", "INSTALL.zh-CN.md", "AntiGPT/README.md", "AntiGPT/README.en.md", "AntiGPT/INDEX.md", "AntiGPT/INDEX.zh-CN.md"]
+exclude = ["AntiGPT/archive/**"]
+navigation_headings = ["Navigation", "导航"]

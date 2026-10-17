@@ -1,66 +1,76 @@
 # Arsvine Skills
 
-**AI governance and focused Agent Skills for real development work.**
+[中文](README.zh-CN.md)
 
-Arsvine Skills 是一个公开的 AI 治理与 Agent Skills 仓库，保存 Arsvine 在实际研究、架构设计和 Coding Agent 工作中持续演化的治理方法与可复用任务能力。
+I maintain this repository for governance methods and general-purpose Skills developed through research, software development, and everyday work with agents. Its current focus is AntiGPT.
 
-仓库当前以 **AntiGPT** 为核心。AntiGPT 关注 Agent 在长任务中常见的目标漂移、判断降级、防御性推理、局部补丁累积、验证膨胀和历史结构保留偏置，并分别为 Planning 与 Execution 提供角色化 Skill。
+## AntiGPT
 
-## What's inside
+AntiGPT is a governance model for agents, developed from my long-term use of Chat, Research Agents, and Coding Agents. Models often complete individual steps yet drift from the objective over long tasks, accumulating local patches, compatibility layers, verification procedures, and defensive explanations.
 
-| Package | Purpose |
+I organize these recurring problems into constraints on judgment, attention, and task trajectories, then apply them through Skills and checkers for research, development, and writing. The aim is to keep agents working toward actual requirements, solve problems at the appropriate responsibility boundary, and reduce the burden of understanding and changing the result.
+
+A persistent Constitution sets the direction. Four Skills turn it into task-specific practice:
+
+| Skill | Responsibility |
 | --- | --- |
-| [`AntiGPT`](AntiGPT/README.md) | Governance model, Constitution, observations, rationale, and implementation model. |
-| [`antigpt-plan`](skills/antigpt-plan/) | Research, architecture, technical comparison, specification, and design judgment. |
-| [`antigpt-exec`](skills/antigpt-exec/) | Repository implementation, refactoring, debugging, testing, verification, and delivery. |
-| [`session-handoff`](skills/session-handoff/) | Produce a high-fidelity conversation-state handoff and stop substantive work. |
-| [`archive/governance`](archive/governance/) | Historical JDD, TED, and COST documents that led to AntiGPT. |
+| [AntiGPT Plan](AntiGPT/skills/antigpt-plan/SKILL.md) | Make decisions, research consequential unknowns, and design at the right level. |
+| [AntiGPT Exec](AntiGPT/skills/antigpt-exec/SKILL.md) | Carry decisions through implementation and keep the whole user journey working. |
+| [Refactoring](AntiGPT/skills/refactoring/SKILL.md) | Reorganize responsibilities, unify data flow, and remove recurring complexity. |
+| [Documentation](AntiGPT/skills/documentation/SKILL.md) | Write for the reader, maintain coherent documentation, and catch recurring defensive prose. |
 
-## Quick install
+Install AntiGPT as one bundle. The documentation Skill owns its prose and navigation checkers; all four Skills share that capability.
 
-AntiGPT uses the Harness's persistent user instructions for its Constitution and native Skill discovery for task-specific guidance. It does not require a session-start hook.
+[Governance approach and evolution](AntiGPT/README.en.md) · [Documentation index](AntiGPT/INDEX.md)
 
-For Codex, from the repository root:
+## Installation
+
+With Python 3.11 or newer, run from this checkout:
 
 ```bash
-python scripts/install.py --profile codex
+python scripts/install.py --profile codex --antigpt
 ```
 
-The installer updates only its managed AntiGPT block in `~/.codex/AGENTS.md` and installs the repository Skills into `~/.codex/skills/`. Existing user instructions outside that block are preserved.
+This installs the four Skills into `~/.codex/skills/` and prepends the Constitution and a short quoted version/update note as a managed block to `~/.codex/AGENTS.md`, preserving your other instructions.
 
-Other Harnesses can use the same installer with explicit paths, or follow [`INSTALL.md`](INSTALL.md).
+[Installation and updates](INSTALL.md) covers previews, independent Skills, and other harnesses.
 
-## Repository layout
+## General Skills
+
+The `general/` directory holds independently installable capabilities:
+
+- [Session Handoff](general/session-handoff/SKILL.md): carry the decisions, context, and unfinished state of a long conversation into the next session.
+
+```bash
+python scripts/install.py --profile codex --skill session-handoff
+```
+
+## Inside the repository
 
 ```text
 AntiGPT/
-  CONSTITUTION.md          # persistent governance core
-  README.md                # formation, observations, model, rationale
-
-skills/
-  antigpt-plan/            # planning/research role skill
-  antigpt-exec/            # execution role skill and mechanical checks
-  session-handoff/         # independent task skill
-
-archive/governance/        # superseded governance documents
-scripts/                   # repository installation and validation
+  .version                Bundle version
+  CONSTITUTION.md          Persistent governance
+  README.md / README.en.md Governance approach and evolution
+  INDEX.md                Documentation index
+  skills/                 Four bundled Skills
+  docs/                   Observations and background
+  archive/                Historical governance texts
+general/                  Independent Skills, each with .version
+scripts/                  Repository installation and validation
+  config/                 Repository tooling configuration
 ```
 
-A Skill owns a distinct task contract. General engineering knowledge that only specializes Planning or Execution lives in AntiGPT role references instead of becoming another workflow Skill.
-
-## Validate
+## Develop
 
 ```bash
-python scripts/validate_repository.py
+python scripts/validate.py
 ```
 
-This runs structural Skill validation, script tests, documentation-graph checks, and active governance-prose checks.
-
-## Status
-
-This repository is research-driven and intentionally evolves through direct structural replacement. Current files describe current policy; historical governance is kept only where it remains useful for understanding the lineage.
+The repository validator checks Skill structure, documentation navigation, all maintained prose (including this README and Skill references), Skill interface text, scanner behavior, and Python compilation. Versions live in `AntiGPT/.version` and each general Skill's `.version`; the installer records them with the installed Skills and adds a short update note to the AntiGPT instruction block or the general Skill's own `SKILL.md`.
 
 ## Navigation
 
-- [Install Arsvine Skills](INSTALL.md)
-- [AntiGPT](AntiGPT/README.md)
+- [Install](INSTALL.md)
+- [AntiGPT introduction](AntiGPT/README.en.md)
+- [AntiGPT index](AntiGPT/INDEX.md)

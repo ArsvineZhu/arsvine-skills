@@ -1,24 +1,88 @@
-# AntiGPT
+# AntiGPT 介绍
 
-AntiGPT 是一套面向 Agent 的治理模型。它源于长期使用 Chat、Research Agent 与 Coding Agent 时反复出现的一类问题：模型能够完成局部任务，却会在长轨迹中逐渐把资源投入到自我辩护、风险陈列、流程完整性、最小修改、兼容性想象和证明堆积，最终偏离用户真正要完成的目标。
+[English](README.en.md)
 
-AntiGPT 将这一类退化统一视为 **local defensibility optimization**：每一步都容易解释、容易证明、容易回退，但整个轨迹开始服务于“让局部行为看起来足够稳妥”，而非服务于目标本身。
+>  本文纯手写，在 AI 时代请您珍惜。
 
-## Constitution
+AntiGPT 是一套面向 Agent 的治理模型，尤其是 GPT 系列模型的 **局部可辩护性优化**：模型很擅长让当前步骤显得谨慎、正确、可验证，却可能失去对完整目标、结构和用户体验的持续关注。
 
-[`CONSTITUTION.md`](CONSTITUTION.md) 是 AntiGPT 唯一的通用治理核心。它适合放入 Agent Harness 的用户级持久自定义指令中，并长期存在于上下文。
+它源于长期使用 Chat、Research Agent 与 Coding Agent 时反复出现的一类问题：模型能够完成局部任务，却会在长轨迹中逐渐把资源投入到自我辩护、风险陈列、流程完整性、最小修改、兼容性想象和证明堆积，最终偏离用户真正要完成的目标。
 
-Constitution 只规定跨角色成立的原则：保持目标和已定决定、做出判断、在语义所有者层级解决问题、限制低价值调查与验证、不给历史结构保留特权、拒绝防御性替代，并在目标完成后停止。
+究其原因，是 LLM 在后训练过程中“习得”的、用于满足测评指标的应对策略——但这显然摧毁了用户体验。
 
-具体任务知识不写入 Constitution。
+## 导航
 
-## 两个角色
+- [仓库概览](../README.zh-CN.md)
+- [安装](../INSTALL.zh-CN.md)
 
-AntiGPT 区分 Planning 与 Execution，因为它们共享治理原则，却面对不同的退化方式。
+- [文档导航](INDEX.zh-CN.md)
 
-### Plan
+## 目录
 
-[`antigpt-plan`](../skills/antigpt-plan/) 面向研究、架构、技术比较、Spec 和设计判断。
+- [“GPT” 现象](#gpt-现象)
+- [宪法](#宪法)
+- [角色区分](#角色区分)
+- [AntiGPT 的结构](#antigpt-的结构)
+- [历史演化](#历史演化)
+
+---
+
+## “GPT” 现象
+
+在编码任务中，常见表现是过分验证、依赖局部通过、测试固化接口、包装与兼容不断累积；模型“不敢”重构，即便重构，也可能删除大量旧代码，却再写一份通过新框架、附加测试和流程引入更多负担的新屎山；模型不考虑能够更好组织仓库的范式：一个代码文件 2000、3000 行，一个目录下代码文件平铺，不会抽出公用机制，不优先使用成熟库或依赖，自己造轮子（然后屎山自己维护）。习惯于列出“证据”，找出“边界”，过分对齐许可证、文件 SHA。
+
+<!-- antigpt: allow rule=logical-limitation-zh reason="The paragraph lists unwanted qualifiers as examples, not limitations on its conclusion" -->
+在自然语言中，表现为预先给出足够的回答后，不断给出边界和限定、构造读者没提出的反驳、在确定结论后面追加“不能说明、不能证明、不代表、不等于、不足以判断、不能保证”等否定限定，虚空打靶。逃避责任，减低判断确定性，难以确定观点，回答啰嗦无层次。
+
+在长期文档中，模型还可能把一次局部纠正写成全局禁令，或将“删除内容”改写成“正确内容（现在没有错误）”的墓碑。AGENTS 与技能文本会把这些习惯传给以后的模型，造成长期污染。
+
+> 以下现象均是不希望见到的。
+
+### 防御性认知
+
+模型遇到未知、风险、限制或反例后，容易持续描述这些问题，而没有把信息重新压缩为判断或行动。
+
+### 确定性降格 / “我的建议、倾向是...”
+
+<!-- antigpt: allow rule=commitment-weakening-zh reason="Quoted alternatives illustrate how settled judgments are weakened" -->
+推理已经得到明确结论，输出阶段却把它改写为“倾向”“可以考虑”“可能更合适”。表达层重新引入了推理阶段已经消除的不确定性。
+
+<!-- antigpt: allow rule=invented-contrast-zh reason="The heading names quoted failure constructions discussed in this section" -->
+<!-- antigpt: allow rule=logical-limitation-zh reason="The heading names quoted failure constructions discussed in this section" -->
+### 命题编造再限定 / “不是而是、不能证明、不自动成为...”
+
+<!-- antigpt: allow rule=logical-limitation-en reason="Quoted examples name the failure pattern being documented" -->
+模型把一个有限命题自行升级为更强命题，再用 “does not prove”、 “does not automatically mean” 等语言否定这个自造命题。文本因此变得防御且冗长。
+
+### 当下保留特权 / 屎山兼容
+
+修改已有结构需要不断举证，保留已有结构却被当成默认安全选项。结果通常是 alias、shim、双路径、过渡层和局部补偿不断积累。
+
+### 过度工程化 / 流程制度化
+
+计划、矩阵、风险等级、验收表、资格验证表、checklist、review stage、evidence package 或固定 phase 开始代替真正的设计和施工。流程从工具变成了交付物。模型见过太多，也太喜欢用 TDD、EDD（测试、证据驱动开发），于是，大仓测试项达数百、新项目刚起步测试就十几个，检查仓库状态就开始找齐 证据，列出矩阵。
+
+### 上下文漂移
+
+长任务与 compaction 更容易留下日志、失败尝试和验证历史，而真正重要的目标、决策与 当前工作被稀释。
+
+---
+
+## 宪法
+
+[`CONSTITUTION.md`](CONSTITUTION.md) 是 AntiGPT 的通用治理核心。它适合放入 Agent Harness 的用户级持久自定义指令中，并长期存在于上下文，比如 ChatGPT APP/Codex 的用户自定义指令。
+
+Constitution 只规定跨角色成立的原则：保持目标和已定决定、做出判断、在语义所有者层级解决问题、限制低价值调查与验证、不给历史结构保留特权、拒绝防御性替代，并在目标完成后停止。具体任务知识不写入 Constitution。
+
+不同模型可能表现出不同的语言习惯和工程偏向。持久指令控制方向，Skill 提供任务方法，脚本负责适合机械判断的部分。需要改变模型执行方式时，优先修改能决定下一步动作的规则或运行环境，避免堆积同义警告。
+
+## 角色区分
+
+AntiGPT 区分 Planning 与 Execution，因为它们共享治理原则，却面对不同的行为恶化方式。
+
+### 计划角色
+
+[`antigpt-plan`](skills/antigpt-plan/) 面向研究、架构、技术比较、Spec 和设计判断。
 
 它重点控制：
 
@@ -28,82 +92,42 @@ AntiGPT 区分 Planning 与 Execution，因为它们共享治理原则，却面�
 - 是否在实现第一个可行方案之前识别了更高层的所有权或模型问题；
 - 已经完成的判断是否在表达时被降格。
 
-### Exec
+### 执行角色
 
-[`antigpt-exec`](../skills/antigpt-exec/) 面向仓库实现、重构、调试、测试、验证和交付。
+[`antigpt-exec`](skills/antigpt-exec/) 面向仓库实现、重构、调试、测试、验证和交付。
 
 它重点控制：
 
 - 是否直接实现已经决定的语义；
-- 局部故障是否劫持当前目标；
+- 局部故障是否劫持当前目标，而非不断钻牛角尖；
 - 是否在错误 owner 上继续堆 patch、adapter、fallback 或 compatibility；
-- 测试与验证是否保护真实 contract，而非追求数量和证明感；
-- 旧 API、旧文档、旧测试与旧流程是否被赋予了无依据的保留特权。
+- 测试与验证是否保护真正重要的逻辑与契约、从目标与用户操作出发，而非追求数量、覆盖面和自我证明；
+- 旧 API、旧文档、旧测试与旧流程是否被赋予了保留与兼容特权。
 
-Refactoring、documentation work、debugging 和 verification 都是 Plan 或 Exec 中的任务知识，因此保留为按需 reference，而不各自形成一套工作流 Skill。
-
-## 观察模型
-
-### Defensive cognition
-
-模型遇到未知、风险、限制或反例后，容易持续描述这些问题，而没有把信息重新压缩为判断或行动。
-
-### Commitment erosion
-
-推理已经得到明确结论，输出阶段却把它改写为“倾向”“可以考虑”“可能更合适”。表达层重新引入了推理阶段已经消除的不确定性。
-
-### Stronger-claim fabrication
-
-<!-- antigpt: allow rule=defensive-negation-en reason="Quoted examples name the failure pattern being documented" -->
-模型把一个有限命题自行升级为更强命题，再用 “does not prove”、 “does not automatically mean” 等语言否定这个自造命题。文本因此变得防御且冗长。
-
-### Status-quo privilege
-
-修改已有结构需要不断举证，保留已有结构却被当成默认安全选项。结果通常是 alias、shim、双路径、过渡层和局部补偿不断积累。
-
-### Process substitution
-
-计划、矩阵、风险等级、checklist、review stage、evidence package 或固定 phase 开始代替真正的设计和施工。流程从工具变成了交付物。
-
-### Context drift
-
-长任务与 compaction 更容易留下日志、失败尝试和验证历史，而真正重要的 `Objective`、`Decisions` 与 `Current Work` 被稀释。
-
-## 实现结构
+## AntiGPT 的结构
 
 AntiGPT 使用四种不同的机制，各自只承担适合机械化的责任：
 
 ```text
 Constitution
-  persistent governance principles
+  持久治理原则
 
-Plan / Exec Skills
-  role-specific routing and task semantics
+计划 / 执行技能
+  角色专属的路由与任务语义
 
-References
-  progressively disclosed domain knowledge
+参考文档
+  按需披露的领域知识
 
-Scripts and evals
-  mechanical checks and behavioral evaluation
+脚本
+  机械检查
 ```
 
-静态脚本只能判断可机械证明的事实。语言扫描可以阻止高置信度的防御性表达模式并要求显式 waiver，但无法决定一个 caveat、抽象或兼容义务在语义上是否合理。此类判断继续由行为 eval 与实际 Agent 表现验证。
+静态脚本只能判断可机械检验的内容。语言扫描可以阻止高置信度的防御性表达模式并要求显式 waiver，但无法决定一个 caveat、抽象或兼容义务在语义上是否合理。
 
-## 为什么不为每类工程任务建立 Skill
+---
 
-一个独立 Skill 应拥有独立的任务运行契约：触发条件、任务目标、生命周期、输出形态或停止条件会发生实质变化。
+## 历史演化
 
-重构代码、治理文档、调试和测试通常不会改变角色。设计这些工作属于 Plan，执行这些工作属于 Exec。因此 AntiGPT 把相关知识放在角色 reference 中，避免复制核心理念或再建立一套流程。
+AntiGPT 从 JDD、TED 与 COST 演化而来，这是在治理 GPT 模型的过程中认知由浅入深的进程。它们分别强化了 justified machinery、Token 经济和软件轨迹总成本等思想，并逐渐暴露出一个更高层的问题：治理对象不能只停留在代码与工程流程，还需要直接约束 Agent 的判断、注意力分配和任务轨迹。最终，得出了最底层的原因：~~F**king RLHF Post-training~~。
 
-`session-handoff` 则属于真正独立的任务：触发后当前工作必须停止，任务目标切换为恢复状态的 checkpoint，输出后再次停止，因此保留为独立 Skill。
-
-## 历史
-
-AntiGPT 从 JDD、TED 与 COST 演化而来。它们分别强化了 justified machinery、Token 经济和软件轨迹总成本等思想，并逐渐暴露出一个更高层的问题：治理对象不能只停留在代码与工程流程，还需要直接约束 Agent 的判断、注意力分配和任务轨迹。
-
-历史原文保存在 [`archive/governance`](../archive/governance/)；它们已被 AntiGPT supersede，不再定义当前行为。
-
-## Navigation
-
-- [Repository overview](../README.md)
-- [Installation](../INSTALL.md)
+历史原文保存在 [`archive/`](./archive/README.md)，已经过时，不再适用。

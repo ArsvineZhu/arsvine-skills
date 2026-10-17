@@ -1,66 +1,67 @@
 # Install Arsvine Skills
 
-Arsvine Skills has two installation surfaces:
+[中文](INSTALL.zh-CN.md)
 
-1. `AntiGPT/CONSTITUTION.md` belongs in the Harness's persistent user-level instructions.
-2. Directories under `skills/` belong in the Harness's Skill directory or native Skill installer.
+Use Python 3.11 or newer. Run these commands from a local checkout of this repository.
 
-The Constitution is persistent governance. Role and task Skills remain progressively disclosed and load only when relevant.
+## Choose what to install
 
-## Codex
-
-From a local checkout:
+AntiGPT installs its Constitution and four Skills together: `antigpt-plan`, `antigpt-exec`, `refactoring`, and `documentation`.
 
 ```bash
-python scripts/install.py --profile codex
+python scripts/install.py --profile codex --antigpt
 ```
 
-Default destinations:
-
-```text
-~/.codex/AGENTS.md
-~/.codex/skills/
-```
-
-The installer inserts or replaces a delimited AntiGPT Constitution block and preserves all other content in the existing `AGENTS.md`.
-
-Preview changes without writing:
+Install an independent general Skill:
 
 ```bash
-python scripts/install.py --profile codex --dry-run
+python scripts/install.py --profile codex --skill session-handoff
 ```
 
-Install selected Skills only:
+Combine the selections:
 
 ```bash
-python scripts/install.py --profile codex --skill antigpt-plan --skill antigpt-exec
+python scripts/install.py --profile codex --antigpt --skill session-handoff
 ```
 
-## Other Harnesses
+Without selection flags, the installer installs AntiGPT and all general Skills. Use `--dry-run` to preview any command.
 
-Use the Harness's persistent global instruction file and native Skill directory:
+## Destinations
+
+The Codex profile writes Skills to `~/.codex/skills/` and prepends the AntiGPT managed block to `~/.codex/AGENTS.md`. Existing instructions follow it. General Skills install only into their Skill directories; their version and update note lives in `SKILL.md`.
+
+For another harness, provide its persistent instruction file and Skill directory:
 
 ```bash
-python scripts/install.py \
+python scripts/install.py --antigpt \
   --instructions-file /path/to/persistent/instructions.md \
   --skills-dir /path/to/skills
 ```
 
-Override the selected Skills with repeated `--skill` options.
+Installed Skill directories are replaced with the selected source content. Keep personal edits in the source checkout before reinstalling.
 
-If a Harness has its own plugin or marketplace installer, native installation may replace the file-copy step. Keep `AntiGPT/CONSTITUTION.md` as the single canonical governance source; do not maintain a second Harness-specific Constitution.
+## Versions and updates
 
-## AI-assisted installation
+- `AntiGPT/.version` is the version of the whole AntiGPT bundle. The installer copies that version into each of its four installed Skill directories as `.version`.
+- Each Skill under `general/` owns its own `.version`, copied with the Skill.
+- AntiGPT appends a short `>` version and update note inside its Constitution block, without a separate heading or local path. General Skills carry the equivalent note in their own `SKILL.md`. The note asks the Agent to check once per session when access is available, notify the user of a newer version, and ask before updating.
 
-You can give a capable Coding Agent this repository and ask it to:
+To update, obtain the latest repository content and rerun the same installation command. This refreshes selected Skills and their version notes. Installing AntiGPT also refreshes its managed block at the beginning of the instruction file.
 
-> Install Arsvine Skills for this Harness. Put `AntiGPT/CONSTITUTION.md` into the user-level persistent instructions without deleting unrelated existing instructions. Install the desired directories under `skills/` through the Harness's native Skill mechanism. Treat archived governance as historical only. Verify that the installed Skill metadata is discoverable.
+## Ask an Agent to install
 
-## Updating
+> Install AntiGPT from this repository as a complete four-Skill bundle. Use the installer with this harness's persistent instruction file and Skill directory. Preserve existing unrelated instructions. Include the installed versions and update-notification guidance. Show me the installation result.
 
-Re-run the installer. The managed Constitution block is replaced in place, and installed Skill directories are synchronized from the current checkout.
+## Validate this checkout
+
+```bash
+python scripts/validate.py
+```
+
+Repository commands and configuration live under `scripts/`. The documentation Skill owns the reusable prose and navigation checkers. Validation scans the repository’s maintained human and AI-facing documents together. Historical JDD, TED, and COST source texts are excluded; their maintained archive introductions are included.
 
 ## Navigation
 
 - [Repository overview](README.md)
-- [AntiGPT](AntiGPT/README.md)
+- [AntiGPT introduction](AntiGPT/README.en.md)
+- [AntiGPT index](AntiGPT/INDEX.md)

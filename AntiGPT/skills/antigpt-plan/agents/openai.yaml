@@ -1,0 +1,4 @@
+interface:
+  display_name: "AntiGPT Plan"
+  short_description: "Govern research, architecture, specification, and design judgment"
+  default_prompt: "Use AntiGPT Plan to make the required judgment, investigate only decision-relevant unknowns, and design at the owning level."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Session Handoff"
+  short_description: "Checkpoint conversation state for a future session"
+  default_prompt: "Create a high-fidelity session handoff from the current conversation, then stop substantive work."

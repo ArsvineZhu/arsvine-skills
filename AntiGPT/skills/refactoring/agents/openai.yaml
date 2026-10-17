@@ -1,0 +1,4 @@
+interface:
+  display_name: "Repository Refactoring"
+  short_description: "Reconstruct repository architecture and simplify code and tests"
+  default_prompt: "Use Repository Refactoring to redesign the owning structure, migrate its consumers, and remove superseded code, tests, and tooling."

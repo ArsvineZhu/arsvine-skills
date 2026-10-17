@@ -1,0 +1,4 @@
+interface:
+  display_name: "Documentation"
+  short_description: "Maintain clear documentation, prose, and navigation"
+  default_prompt: "Use Documentation to edit the canonical document, preserve its intended voice, and check affected prose and navigation."
