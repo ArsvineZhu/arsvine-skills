@@ -1,0 +1,15 @@
+# --- Go ---
+bin/
+dist/
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+coverage.out
+coverage.html
+vendor/
+go.work
+go.work.sum

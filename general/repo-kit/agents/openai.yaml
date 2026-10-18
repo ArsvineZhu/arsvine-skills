@@ -1,0 +1,4 @@
+interface:
+  display_name: "Repo Kit"
+  short_description: "Quick toolbox for common repository hygiene"
+  default_prompt: "Use Repo Kit as the repository quick toolbox for this project."

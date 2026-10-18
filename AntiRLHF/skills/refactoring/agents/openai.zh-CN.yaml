@@ -1,0 +1,4 @@
+interface:
+  display_name: "Repository Refactoring"
+  short_description: "连贯替换过时架构、代码路径、测试及工具"
+  default_prompt: "追踪所需行为并选择目标职责；迁移消费者，在架构变化处重建测试，删除被取代的代码与配套文件。"

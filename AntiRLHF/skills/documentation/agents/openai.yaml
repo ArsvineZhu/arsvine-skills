@@ -1,0 +1,4 @@
+interface:
+  display_name: "Documentation"
+  short_description: "Edit documents in the author's voice and maintain usable instructions and links"
+  default_prompt: "Read the original document, write as its intended author to its reader, make the requested changes in place, and check affected prose and links."

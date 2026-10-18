@@ -1,0 +1,22 @@
+{
+    "endOfLine": "lf",
+    "printWidth": 120,
+    "proseWrap": "preserve",
+    "overrides": [
+        {
+            "files": "*.md",
+            "options": {
+                "parser": "markdown",
+                "tabWidth": 2,
+                "proseWrap": "preserve"
+            }
+        },
+        {
+            "files": ["*.yml", "*.yaml"],
+            "options": {
+                "tabWidth": 2,
+                "singleQuote": false
+            }
+        }
+    ]
+}

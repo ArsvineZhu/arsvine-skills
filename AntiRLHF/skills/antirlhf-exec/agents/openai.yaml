@@ -1,0 +1,4 @@
+interface:
+  display_name: "AntiRLHF Exec"
+  short_description: "Implement working paths, migrate affected code, and test relevant behavior"
+  default_prompt: "Follow the actual required behavior through its entrypoints and consumers. Implement the missing pieces, repair responsible owners, run relevant checks, and deliver the result."

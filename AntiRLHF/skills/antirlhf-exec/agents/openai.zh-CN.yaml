@@ -1,0 +1,4 @@
+interface:
+  display_name: "AntiRLHF Exec"
+  short_description: "完成真实使用路径，迁移相关代码，检验实际行为"
+  default_prompt: "沿入口和消费者追踪用户要求的功能，补全缺失能力，修正真正的职责所有者，运行相关检查并交付结果。"

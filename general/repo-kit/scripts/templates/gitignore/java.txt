@@ -1,0 +1,13 @@
+# --- Java / JVM ---
+*.class
+*.jar
+*.war
+*.ear
+*.nar
+hs_err_pid*
+replay_pid*
+.mtj.tmp/
+target/
+out/
+.gradle/
+.factorypath

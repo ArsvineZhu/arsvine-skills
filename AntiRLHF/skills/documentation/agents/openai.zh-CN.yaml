@@ -1,0 +1,4 @@
+interface:
+  display_name: "Documentation"
+  short_description: "按照作者口吻编辑文档，维护可使用的指令与链接"
+  default_prompt: "先阅读原文，站在作者位置写给预定读者，在原处完成修改，并检查受影响的语言和链接。"

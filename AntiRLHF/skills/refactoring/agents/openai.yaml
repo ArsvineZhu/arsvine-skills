@@ -1,0 +1,4 @@
+interface:
+  display_name: "Repository Refactoring"
+  short_description: "Replace obsolete architecture, code paths, tests, and tooling coherently"
+  default_prompt: "Trace the required behavior and choose the target owners. Migrate consumers, rebuild tests where the architecture changes, and remove replaced code and support files."

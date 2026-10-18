@@ -1,0 +1,4 @@
+interface:
+  display_name: "AntiRLHF Plan"
+  short_description: "研究技术选择，形成可使用的设计与规格"
+  default_prompt: "阅读当前目标及项目决定；调查影响选择的事实，确定方向，交付下一位执行者能用的设计或 Spec。"

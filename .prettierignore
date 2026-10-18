@@ -1,0 +1,13 @@
+dist/
+build/
+node_modules/
+package-lock.json
+AntiRLHF/archive/
+*.py
+pyproject.toml
+.editorconfig
+.gitattributes
+.gitignore
+**/__pycache__/
+**/.version
+**/*.pyc

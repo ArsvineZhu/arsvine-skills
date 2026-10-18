@@ -1,0 +1,66 @@
+version = 1
+
+exclude = [
+  "**/.git/**",
+  "**/node_modules/**",
+  "**/dist/**",
+  "**/build/**",
+  "**/.venv/**",
+  "**/venv/**",
+  "**/__pycache__/**",
+  "**/.ruff_cache/**",
+  "**/.mypy_cache/**",
+  "**/.pytest_cache/**",
+  "**/AntiRLHF/archive/**",
+]
+
+# Prefer an inline file-header waiver on the offending file.
+# Comment body must be exactly: repo-kit: allow length reason="..."
+# Use [[waivers]] here only for paths that cannot host a comment.
+# [[waivers]]
+# path = "vendor/generated.dat"
+# reason = "Binary-adjacent generated artifact cannot carry an inline waiver"
+
+[limits.default]
+warn = 400
+block = 800
+
+[limits.extensions.py]
+warn = 400
+block = 800
+
+[limits.extensions.md]
+warn = 800
+block = 1200
+
+[limits.extensions.toml]
+warn = 200
+block = 400
+
+[limits.extensions.yaml]
+warn = 200
+block = 400
+
+[limits.extensions.yml]
+warn = 200
+block = 400
+
+[limits.extensions.ts]
+warn = 600
+block = 900
+
+[limits.extensions.tsx]
+warn = 600
+block = 900
+
+[limits.extensions.js]
+warn = 600
+block = 900
+
+[limits.extensions.jsx]
+warn = 600
+block = 900
+
+[limits.extensions.rs]
+warn = 500
+block = 800

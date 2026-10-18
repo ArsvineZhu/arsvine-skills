@@ -1,0 +1,13 @@
+version = 1
+
+[docgraph]
+entries = ["README.md", "README.zh-CN.md"]
+include = [
+  "README.md", "README.zh-CN.md", "INSTALL.md", "INSTALL.zh-CN.md",
+  "AntiRLHF/README.md", "AntiRLHF/README.en.md",
+  "AntiRLHF/INDEX.md", "AntiRLHF/INDEX.zh-CN.md", "AntiRLHF/TRANSLATION-REVIEW.md",
+  "AntiRLHF/docs/README.md", "AntiRLHF/docs/README.en.md",
+  "AntiRLHF/docs/research/*.md",
+]
+exclude = ["AntiRLHF/archive/**"]
+navigation_headings = ["Navigation", "导航"]

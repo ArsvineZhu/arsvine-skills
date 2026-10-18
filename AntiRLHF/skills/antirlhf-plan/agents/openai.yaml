@@ -1,0 +1,4 @@
+interface:
+  display_name: "AntiRLHF Plan"
+  short_description: "Research technical choices and produce usable designs and specifications"
+  default_prompt: "Read the current goal and project decisions. Investigate the facts that affect the choice; select a direction and provide a design or specification another agent can use."

@@ -1,0 +1,11 @@
+# --- Logs / dumps / archives ---
+*.log
+*.tgz
+*.tar
+*.zip
+*.7z
+*.rar
+core
+core.*
+*.dmp
+*.dump

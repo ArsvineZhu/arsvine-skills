@@ -1,0 +1,8 @@
+# --- Local tool / agent state ---
+.codegraph/
+.claude/
+.codex/
+.cursor/
+!.cursor/rules/
+*.local
+*.local.*
